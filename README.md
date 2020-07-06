@@ -1,5 +1,7 @@
 # simple_database_as_api
-basic application of database as api service using docker
+basic application of database as api service using docker.
+
+This api can store any sentence a user enters.
 
 To run this api you need to install docker and docker compose on your machine and run the following commands.
 
