@@ -11,7 +11,7 @@ this command will install the required packages and libraries.
 
 >docker-compose up
 
-the api will be hosted on port 0.0.0.0:5000 using this command.
+the api will be hosted on 0.0.0.0:5000 using this command.
 
 This api has 3 end points.
 
