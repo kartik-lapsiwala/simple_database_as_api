@@ -11,8 +11,28 @@ db = client.SentencesDatabase
 users = db["Users"]
 
 class Register(Resource):
+    """
+    Registers a new user in the system with a secure hashed password and an initial token count.
+    Parameters:
+        - postedData (JSON object): Contains the "username" and "password" provided by the user.
+    Returns:
+        - JSON object: Contains the status code and the result message of the signup operation.
+    Processing Logic:
+        - The password is hashed using bcrypt for secure storage.
+        - A salt is automatically generated and added to the password hash to improve security.
+        - An initial sentence is set to an empty string and initial tokens are set to 10 for the new user.
+    """
     def post(self):
         # Get posted data by the user
+        """Registers a new user with a hashed password and initial token count.
+        Parameters:
+            - postedData (JSON object): Contains the "username" and "password" provided by the user.
+        Returns:
+            - JSON object: Contains the status code and the result message of the signup operation.
+        Processing Logic:
+            - The password is hashed using bcrypt for secure storage.
+            - A salt is automatically generated and added to the password hash to improve security.
+            - An initial sentence is set to an empty string and initial tokens are set to 10 for the new user."""
         postedData = request.get_json()
         username = postedData["username"]
         password = postedData["password"]
@@ -47,6 +67,16 @@ def count_tokens(username):
 
 
 class Store(Resource):
+    """
+    Provides functionality for storing a sentence for a specific user with authentication and token management.
+    Parameters:
+        - None: The parameters (username, password, sentence) are extracted from the posted JSON data, not passed as function arguments.
+    Processing Logic:
+        - Verifies user credentials using a helper function before allowing sentence storage.
+        - Checks if the user has enough tokens to perform the operation.
+        - Deducts a token from the user's account upon successful storage of the sentence.
+        - Uses MongoDB operations to update user data.
+    """
     def post(self):
         postedData = request.get_json()
         username = postedData["username"]
@@ -89,6 +119,16 @@ class Store(Resource):
         return jsonify(retJson)
 
 class Retrieve(Resource):
+    """
+    Handles the retrieval of data with authentication and token management for a RESTful service.
+    Parameters:
+        None.
+    Processing Logic:
+        - Verifies user credentials using a helper function.
+        - Checks the number of available tokens for the user to ensure they can proceed.
+        - Deducts a token from the user's token count after successful credential and token verification.
+        - Returns a JSON response with the status of the request, data retrieved, and remaining tokens.
+    """
     def post(self):
         postedData = request.get_json()
         username = postedData["username"]
