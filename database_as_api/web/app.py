@@ -37,8 +37,7 @@ def verify_pw(username, password):
     hashed_pw = users.find({"username": username})[0]["password"]
     if bcrypt.hashpw(password.encode("utf8"), hashed_pw) == hashed_pw:
         return True
-    else:
-        return False
+    return False
 
 # create a function to count number of tokens
 def count_tokens(username):
